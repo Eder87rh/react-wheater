@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Formulario = () => {
+const Formulario = ({datosConsulta}) => {
 
   // state del componente
   const [ busqueda, guardarBusqueda ] = useState({
@@ -14,12 +14,19 @@ const Formulario = () => {
       ...busqueda,
       [e.target.name]: e.target.value
     })
-    
+
     console.log("TCL: Formulario -> busqueda", busqueda)
   }
 
+  const consultarClima = e => {
+    e.preventDefault();
+
+    // pasar hacia el componente principal
+    datosConsulta(busqueda);
+  }
+
   return ( 
-    <form action="">
+    <form onSubmit={consultarClima}>
       <div className="input-field col s12">
         <input 
           type="text" 
