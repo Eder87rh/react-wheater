@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Formulario = () => {
 
+  // state del componente
+  const [ busqueda, guardarBusqueda ] = useState({
+    ciudad: '',
+    pais: ''
+  })
+  
   const handleChange = e => {
     // Cambiar el state
+    guardarBusqueda({
+      ...busqueda,
+      [e.target.name]: e.target.value
+    })
+    
+    console.log("TCL: Formulario -> busqueda", busqueda)
   }
 
   return ( 
