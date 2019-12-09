@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Formulario from './components/Formulario';
 import Error from './components/Error';
+import Clima from './components/Clima';
 
 
 function App() {
@@ -23,18 +24,15 @@ function App() {
       // consultar la URL
   
       const respuesta = await fetch(url);
-      const resultado = respuesta.json();
+      const resultado = await respuesta.json();
 
       guardarResultado(resultado);
-  
-      console.log("TCL: consultarAPI -> resultado", resultado)
     }
 
     consultarAPI();
   }, [ciudad, pais]);
 
   const datosConsulta = datos => {
-  console.log("TCL: App -> datos", datos)
 
     // Validar que ambos campos esten
     if(datos.ciudad === "" || datos.pais === "") {
@@ -55,9 +53,11 @@ function App() {
   if(error) {
     // Hay un error, mostrarlo
     componente = <Error mensaje="Ambos campos son obligatorios"/>
+  } else if (resultado.cod === "404") {
+    componente = <Error mensaje="La ciudad no existe en nuestro registro"/>
   } else {
     // Mostrar el clima
-    componente = null;
+    componente = <Clima resultado={resultado} />;
   }
 
 
